@@ -5,6 +5,7 @@ var app=express();
 app.use(cors());
 
 var MongoClient= require("mongodb").MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var assert= require("assert");
 var url ='mongodb://localhost:27017/intern';
 
@@ -18,6 +19,8 @@ var counter_for_leave_application=1;
 app.get('/login_authorisation',function(req,res){
 
     function getting_all_the_user_name(db,callback){
+
+      current_user=[]; // removing the old one for login authorisation
 
       var your_applications=db.collection('users').find();
       your_applications.each(function(err,doc){
@@ -53,7 +56,6 @@ app.get('/login_authorisation',function(req,res){
           }
 
           setTimeout(function(){
-
             //  var return_json={"val":acess_value};
               res.send(current_user);
           },500)
@@ -113,7 +115,7 @@ app.post('/create_leave_request',function(req,res){
 
     function tell_mongo_to_insert_leave_application(db,callback){
 
-      var contents={StartDate:req.headers.startdate,EndDate:req.headers.enddate,LeaveType:req.headers.leavetype,Reason:req.headers.reason,RequestBy:req.headers.requestedby,RequestedAt:req.headers.requestedat,ApprovalStatus:"-",ApprovedAt:"-",UserName:req.headers.username,LeaveID:(counter_for_leave_application++).toString()};
+      var contents={StartDate:req.headers.startdate,EndDate:req.headers.enddate,LeaveType:req.headers.leavetype,Reason:req.headers.reason,RequestBy:req.headers.requestedby,RequestedAt:req.headers.requestedat,ApprovalStatus:"-",ApprovedAt:"-",UserName:req.headers.username};
       db.collection('leave').insertOne(contents,function(err,res){
             assert.equal(err,null);
             console.log("leave_request_created_successfully");
@@ -172,14 +174,27 @@ app.get('/get_all_leave_application_manager',function(req,res){
 
 app.post('/change_status',function(req,res){
 
+  var modified_response;
+
   function tell_mongo_to_change_status(db,callback){
-    db.collection('leave').update({'LeaveID':req.headers.leaveid,'UserName':req.headers.username},{$set:{'ApprovalStatus':req.headers.approvalstatus,'ApprovedAt':req.headers.approvedat}},function(err,res){
+
+    db.collection('leave').update({'_id':ObjectID(req.headers.leaveid),'UserName':req.headers.username},{$set:{'ApprovalStatus':req.headers.approvalstatus,'ApprovedAt':req.headers.approvedat}},function(err,res){
       assert.equal(err,null);
-      console.log("approved successfully");
+      if(res.result.nModified==0){
+        console.log("Was not able to approve");
+      }
+      else{
+        console.log("Approved Successfully");
+      }
+      modified_response=res.result.nModified;
       db.close();
     });
 
-    res.send({"val":"Approved Sucessfully"});
+    setTimeout(function(){
+      console.log(modified_response);
+      res.send({"val":modified_response});
+
+    },500)
   }
 
   MongoClient.connect(url,function(err,db){

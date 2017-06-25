@@ -1,0 +1,234 @@
+<html>
+<head>
+<script src="jquery.min.js"> </script>
+<script src="materialize.js"> </script>
+<link rel="stylesheet" type="text/css" href="materialize.css">
+<link rel="stylesheet" type="text/css" href="index.css">
+<link rel="stylesheet" href="mate_icon.css">
+<script src="index.js"> </script>
+<script src="ajax_file_server_connection.js"> </script>
+</head>
+<body>
+
+  <div id="modal1" class="modal modal-fixed-footer">
+  <div class="modal-content">
+      <div class="row">
+        <div class="col s12 center">
+          <h3> Invalid User Name </h3>
+        </div>
+      </div>
+  </div>
+</div>
+
+  <div id="page_1">
+
+
+    <div class="row">
+      <div class="col s12 center">
+          <h2 style="font-family:boldi"> Leave Application Portal </h2> <br><br><br> <br><br>
+      </div>
+
+      <div class="col s6  offset-s3">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <ul class="tabs blue-grey darken-1">
+            <li class="tab col s3"><a class="active white-text" href="#test1">Login </a></li>
+            <li class="tab col s3"><a class="white-text" href="#test2">Register</a></li>
+            </ul>
+            </div>
+            <div id="test1" class="col s12"> <br> <br>
+              <div class="input-field col s8 offset-s1">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="user_name_input" type="text" class="validate">
+                <label for="icon_prefix">User Name</label>
+              </div>
+              <div class="col s12 center"> <br> <br>
+                <a class="waves-effect waves-light btn" onclick="login_button()">Login</a>
+              </div>
+
+            </div>
+
+            <div id="test2" class="col s12">
+              <div class="input-field col s6" >
+                <i class="material-icons prefix">perm_identity</i>
+                <input id="icon_prefix" type="text" class="validate">
+                <label for="icon_prefix">First Name</label>
+              </div>
+
+              <div class="input-field col s6">
+                <input id="icon_prefix" type="text" class="validate">
+                <label for="icon_prefix">Last Name</label>
+              </div>
+
+              <div class="input-field col s8 offset-s1">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="icon_prefix" type="text" class="validate">
+                <label for="icon_prefix">User Name</label>
+              </div>
+
+              <div class="input-field col s8 offset-s1">
+                <i class="material-icons prefix">assignment_ind</i>
+                <input id="icon_prefix" type="text" class="validate">
+                <label for="icon_prefix">Role</label>
+              </div>
+
+              <div class="input-field col s8 offset-s1">
+                <i class="material-icons prefix">email</i>
+                <input id="icon_prefix" type="email" class="validate">
+                <label for="icon_prefix">Email</label>
+              </div>
+
+            </div>
+            <br> <br> <br> <br><br> <br> <br> <br><br> <br> <br> <br><br> <br> <br> <br>
+          </div>
+        </div>
+     </div>
+   </div>
+
+
+  <div id="emplyee_page">
+
+    <div class="row"> <br> <br>
+      <div class="col s6 offset-s3 center">
+        <h3> Employee Portal </h3>
+      </div><br> <br>
+    </div>
+
+    <div class="row">
+      <br><br><br><br>
+      <div class="col s6 center">
+        <a class="waves-effect waves-light btn" onClick="new_application_created_call()">Create New Application</a>
+      </div>
+      <div class="col s6 center">
+        <a class="waves-effect waves-light btn" onclick="all_status_call()" >Get Status of all the application</a>
+      </div>
+   </div>
+
+   <br> <br> <br>
+   <div class="row" id="new_application_id" style="display:none">
+
+     <div class="input-field col s6 offset-s3">
+      <i class="material-icons prefix">account_circle</i>
+      <input id="input_start_date" type="date" class="datepicker">
+    </div>
+    <div class="input-field col s6 offset-s3">
+      <i class="material-icons prefix">phone</i>
+      <input id="input_end_date" type="date" class="datepicker">
+    </div>
+    <div class="input-field col s6 offset-s3">
+      <i class="material-icons prefix">phone</i>
+      <input id="input_leave_type" type="text" class="validate">
+      <label for="icon_telephone">Leave Type</label>
+    </div>
+    <div class="input-field col s6 offset-s3">
+      <textarea id="input_reason_type" class="materialize-textarea"></textarea>
+      <label for="textarea1">Reason</label>
+    </div>
+    <div class="col s6 center offset-s3"> <br>
+      <a class="waves-effect waves-light btn" onclick="create_leave_application()">Create Leave Application</a>
+    </div>
+
+  </div>
+
+  <div class="row" id="get_status_all_box" style="display:none">
+    <!-- <div class="col s6 offset-s3">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+            <div class="col s12"></div>
+            <div class="col s12"></div>
+            <div class="col s12"></div>
+            <div class="col s12"></div>
+            <div class="col s12"></div>
+            <div class="col s12"></div>
+            <div class="col s12"></div>
+          </div> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+      </div>
+    </div> -->
+  </div>
+
+
+
+  </div>
+
+  <div id="manager_page"> <br> <br>
+    <div class="row">
+      <div class="col s6 offset-s3 center">
+          <h3> Manager Portal </h3>
+      </div> <br> <br>
+    </div>
+
+    <div class="row"> <br> <br>
+      <div class="col s6 center">
+        <a class="waves-effect waves-light btn" onClick="manager_all_leave_application_from_html()">Get Leave Applications</a>
+      </div>
+
+      <div class="col s6 center">
+        <a class="waves-effect waves-light btn" onClick="approve_leave_application_html()">Approve Leave Applications</a>
+      </div>
+
+
+   </div>
+
+    <div class="row" id="manager_leave_output" style="display:none">
+      <!-- <div class="col s10 offset-s1">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+              <div class="col s12">Start Date </div>
+              <div class="col s12">End Date </div>
+              <div class="col s12">Leave Type </div>
+              <div class="col s12">Reason </div>
+              <div class="col s12">RequestedBy </div>
+              <div class="col s12">RequestedAt </div>
+              <div class="col s12">Approval Status </div>
+              <div class="col s12">Approved At </div>
+              <div class="col s12">User Name </div>
+              <div class="col s12">Id Number </div>
+            </div> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="row" id="approve_leave_application_output" style="display:none">
+      <div class="col s6 offset-s3">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text"><br> <br>
+           <div class="input-field col s10 offset-s1">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="user_name_manager" type="text" class="validate">
+            <label for="icon_prefix">User Name of Employee</label>
+           </div>
+           <div class="input-field col s10 offset-s1">
+            <i class="material-icons prefix">assignment_ind</i>
+            <input id="leave_id" type="text" class="validate">
+            <label for="icon_telephone">Enter Leave ID of Employee</label>
+           </div>
+
+           <div class="col s12  center"> <br> <br>
+             <a class="waves-effect waves-light btn" onClick="approve_application_now()">Approve Leave</a>
+           </div>
+          </div>
+          <br> <br> <br><br> <br> <br><br> <br> <br><br> <br> <br>
+      </div>
+    </div>
+
+  <div>
+
+</body>
+<script>
+$(document).ready(function(){
+  $('ul.tabs').tabs();
+  $('.modal').modal({
+    startingTop: '10%', // Starting top style attribute
+    endingTop: '30%', // Ending top style attribute
+
+
+  });
+
+});
+
+$('.datepicker').pickadate({
+  selectMonths: true, // Creates a dropdown to control month
+  selectYears: 15 // Creates a dropdown of 15 years to control year
+});
+</script>
+</html>

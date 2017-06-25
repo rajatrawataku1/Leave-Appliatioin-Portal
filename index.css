@@ -1,0 +1,67 @@
+
+@font-face {
+
+ font-family:light;
+ src: url(Roboto-light.ttf);
+
+}
+
+@font-face {
+
+ font-family:mediumi;
+ src: url(Roboto-Medium.ttf);
+
+}
+
+@font-face {
+
+ font-family:regular;
+ src: url(Roboto-Regular.ttf);
+
+}
+
+@font-face {
+
+ font-family:boldi;
+ src: url(Roboto-bold.ttf);
+
+}
+
+@font-face {
+
+ font-family:thini;
+ src: url(Roboto-thin.ttf);
+
+}
+
+#page_1
+{
+   display: block;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+}
+
+#emplyee_page
+{
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+#manager_page
+{
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}

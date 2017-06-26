@@ -5,6 +5,12 @@ var acess_respone;
 var leave_request_response;
 var approve_request_response;
 
+//  In all these I have used ajax for connection with server
+// Server is listening with port no : 3000
+// headers are the content which we send from frontend to backend
+//
+
+// this function initiate the service for login as employee or manager
 function check_acess()
 {
   var settings =
@@ -22,19 +28,21 @@ function check_acess()
 
   $.ajax(settings).done(function (response)
   {
-    acess_respone=response;
+    acess_respone=response;   // this is the response from the server it may  contain data it is checked further in the code as below
 
     console.log(acess_respone);
 
     if(acess_respone.length==0)
     {
       $("#modal1").children().children().children().text("Please Enter Correct User Name ");
-      $('#modal1').modal('open');
+      $('#modal1').modal('open'); // modal used for giving response to the user/client
     }
     else
     {
       if(acess_respone.Role=="employee")
       {
+        // emplyee login taking place
+        // these display none are used for front-end
         $("#page_1").css("display","none");
         $("#emplyee_page").css("display","block");
         $("#manager_page").css("display","none");
@@ -43,6 +51,7 @@ function check_acess()
       }
       else
       {
+        // manager login taking place
         $("#emplyee_page").css("display","none");
         $("#page_1").css("display","none");
         $("#manager_page").css("display","block");
@@ -50,23 +59,13 @@ function check_acess()
         $("#user_name_input").text("");
       }
     }
-
-    // if(acess_respone==0)
-    // {
-    //   $('#modal1').modal('open');
-    // }
-    // else
-    // if(acess_respone==1){
-    //     $("#page_1").css("display","none");
-    //     $("#")
-    // }
   });
 
 }
 
+// this function initiate the service for checking all the leave application for the current employer who is logged in
 function employer_leave_application()
 {
-
   var settings =
   {
     "async": true,
@@ -75,14 +74,15 @@ function employer_leave_application()
     "method": "GET",
     "headers":
       {
-      "usernameinput": acess_respone.UserName //$("#user_name_input").val()//local_storage
-     }
+      "usernameinput": acess_respone.UserName // acess_respone is the array containing the name of the employer logged in
+      }
   }
 
   $.ajax(settings).done(function (response)
   {
     employer_leave_application_array=response;
-    console.log(employer_leave_application_array);
+    console.log(employer_leave_application_array);  // this array contains all the leave application for the curretly logged employer
+    // futher code is just for showing that thing in front-end
 
     $("#get_status_all_box").empty();
 
@@ -105,18 +105,10 @@ function employer_leave_application()
   });
 }
 
-
+// this function initiate the service for creating leave application for the current employer who is logged in
 function create_leave_application()
 {
-
-  // checking whether all the fields are filled correctly or not
-  // var  array_tp_check=[ {"start_date_input_value": $("#input_start_date").val()},
-  //                       {"end_date_input_value": $("#input_end_date").val()},
-  //                       {"leave_type_input_value": $("#input_leave_type").val()},
-  //                       {"reason_value":$("#input_reason_type").val()}
-  //                     ];
-
-  var entery_allowed_or_not=1;
+  var entery_allowed_or_not=1;  // this variable performs various checks for wrong input by the user
 
   $("#modal1").children().children().children().text("");
 
@@ -146,7 +138,7 @@ function create_leave_application()
     $("#modal1").children().children().children().append("Start Data should be less than End Date <br>");
   }
 
-  if(entery_allowed_or_not==1)
+  if(entery_allowed_or_not==1)  // if it goes inside means all the inputs are correct and we can create leave application for the current empolyer
   {
     var settings =
     {
@@ -179,6 +171,7 @@ function create_leave_application()
   }
 }
 
+// this function initiate the service for getting all the leave application list to the manager who is logged in
 function manager_all_leave_application()
 {
   var settings =
@@ -218,6 +211,7 @@ function manager_all_leave_application()
   });
 }
 
+// this is extra function which  initiates the service for getting all the leave appication data and show it to the mananger to get help in changing approval
 function getting_data_for_manager_to_approve_things(){
 
   var settings =
@@ -230,8 +224,10 @@ function getting_data_for_manager_to_approve_things(){
 
   $.ajax(settings).done(function (response)
   {
-    manager_all_leave_application_output=response;
+    manager_all_leave_application_output=response;// array containing all the leave application
     console.log(manager_all_leave_application_output);
+
+    // futher code is for front-end just showing all leave application to the manager front-end
 
     $("#for_manager_help_data").empty();
 
@@ -258,9 +254,11 @@ function getting_data_for_manager_to_approve_things(){
 
 }
 
+// this is function which  initiates the service for changing apporval status of application by current manager
+
 function approve_leave_application()
 {
-  var approval_allowed_or_not=1;
+  var approval_allowed_or_not=1;      // this variable handles all the wrong inputs given by the manager for apporval of an applicaion
   $("#modal1").children().children().children().text("");
 
   if($("#user_name_manager").val()=="")
@@ -274,7 +272,27 @@ function approve_leave_application()
     $("#modal1").children().children().children().append("Enter leave id <br>");
   }
 
-  if(approval_allowed_or_not==1)
+  var re = /[0-9A-Fa-f]{6}/g;
+  var object_id_check=$("#leave_id").val();
+  if(re.test(object_id_check))
+  {
+    console.log("valid hex");
+  }
+  else {
+    approval_allowed_or_not=0;
+    $("#modal1").children().children().children().append("Please copy correct leave id from below");
+    console.log("not valid hex");
+  }
+
+  re.lastIndex = 0;
+  // var object_id_check=parseInt(,24);
+  // if( object_id_check.toString(24)==$("#leave_id").val() == false )
+  // {
+  //     approval_allowed_or_not=0;
+  //     $("#modal1").children().children().children().append("Please enter correct leave id <br>");
+  // }
+
+  if(approval_allowed_or_not==1)  // this approval_allowed_or_not == 1 means all the inputs are valid we can continue further
   {
     var settings=
     {
@@ -300,12 +318,12 @@ function approve_leave_application()
         $('#modal1').modal('open');
       }
       else {
-        $("#modal1").children().children().children().text("Sorry Approval Unsucessfully");
+        $("#modal1").children().children().children().text("Sorry Approval Unsucessfully May be network issues or Incorrect User Name Entered");
         $('#modal1').modal('open');
       }
     });
   }
-  else {
+  else {  // wrong values entered
     $('#modal1').modal('open');
   }
 

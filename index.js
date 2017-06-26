@@ -1,4 +1,7 @@
 
+// these are all the function used
+// either for front end or connecting ajax_file_server_connection functions  with the front-end buttons
+
 function login_button()
 {
   console.log($("#user_name_input").val());

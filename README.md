@@ -2,6 +2,7 @@
 ![Alt text](pl.png?raw=true "Optional Title")
 <br/>
 
+> Video Link of the application : https://drive.google.com/open?id=0B1Z59yxdylI1cWFHNEw1WXhFcFE 
 
 An application to manage all the leave application by the employee of a company. <br>
 Two set of users are there in application : Employee and Manager.

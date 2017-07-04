@@ -1,4 +1,4 @@
-# Leave-Appliatioin-Portal
+# Leave-Application-Portal
 ![Alt text](pl.png?raw=true "Optional Title")
 <br/>
 
